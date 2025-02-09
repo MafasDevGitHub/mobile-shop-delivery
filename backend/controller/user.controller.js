@@ -4,37 +4,45 @@ const userService = require('../services/user.service');
 const controller = {
     signup: async (req, res) => {
         try {
-            const { username, email, passoword } = req.body;
-            const newuser = await userService.signup(username, email, passoword);
-
+            console.log(req.body); 
+            const { username, email, password } = req.body; 
+    
+            const newuser = await userService.signup(username, email, password); 
+    
             if (newuser.error) {
-                return res.status(newUser.statuscode || 500).json({ error: newUser.error })
+                return res.status(newuser.statuscode || 500).json({ error: newuser.error });
             }
-            res.status(201).json({ newUser })
-
+    
+            res.status(201).json({ newuser }); 
         }
         catch (error) {
             console.log(error);
-            return res.status(500).json({ "error": "error in sign up controller" })
+            return res.status(500).json({ "error": "error in sign up controller" });
         }
     },
 
     signin: async (req, res) => {
         try {
-            const { email, passoword } = req.body;
-            const user = await userService.signin(email, password);
-
-            if (user.error) {
-                return res.status(user.statuscode || 500).json({ error: user.error })
+            const { email, password } = req.body; 
+    
+            if (!email || !password) {
+                return res.status(400).json({ error: "Email and password are required" });
             }
-            res.status(201).json({ user })
-
-        }
-        catch (error) {
+    
+            const user = await userService.signin(email, password);
+    
+            if (user.error) {
+                return res.status(user.statuscode || 500).json({ error: user.error });
+            }
+            
+            res.status(200).json({ user });
+    
+        } catch (error) {
             console.log(error);
-            return res.status(500).json({ "error": "error in sign in controller" })
+            return res.status(500).json({ error: "Error in sign-in controller" });
         }
     }
+    
 }
 
 module.exports = controller;

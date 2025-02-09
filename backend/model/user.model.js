@@ -27,4 +27,9 @@ userSchema.pre('save', async function(next) {
     next();
 })
 
+userSchema.statics.emailIsTaken = async function (email) {
+    const user = await this.findOne({ email });
+    return !!user; 
+};
+
 module.exports = mongoose.model('User', userSchema);

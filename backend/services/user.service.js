@@ -20,21 +20,23 @@ const signup = async (username, email, password) => {
 }
 
 const signin = async (email, password) => {
-    try{
-        const user = await User.findOne({email});
-        if(!user){
-            return { success: false, mdg: "Invalid Email", statuscode: 409 }
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return { success: false, msg: "Invalid Email", statusCode: 409 };
         }
 
         const token = await authMiddleware.genarateToken(user);
-        return {success: true, user, token}
+        if (!token) {
+            return { success: false, msg: "Token generation failed", statusCode: 500 };
+        }
 
-    }
-    catch(error){
+        return { success: true, user, token };
+    } catch (error) {
         console.error(error);
-        return { success: false, msg: "Somthing went wrong", statuscode: 500 }
+        return { success: false, msg: "Something went wrong", statusCode: 500 };
     }
-}
+};
 
 module.exports = {
     signup,
