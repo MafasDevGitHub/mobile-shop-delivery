@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const userRoutes = require('../routes/user.routes');
+const userRoutes = require('./user.routes');
+const productRoutes = require('./product.routes');
 
 const routes = [
     {
         path: '/account',
         route: userRoutes
+    },
+    {
+        path: '/product',
+        route: productRoutes
     }
 ]
 

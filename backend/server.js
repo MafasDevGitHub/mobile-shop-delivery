@@ -4,9 +4,17 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const path = require("path");
 const routes = require('./routes/index.routes');
 
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
+
+app.use("/image", express.static(path.join(__dirname, "/Public/Uploads/Images")));
+
 app.use(express.json());
+
+app.use("/uploads", express.static("uploads"));
 app.use('/api', routes);
 
 
