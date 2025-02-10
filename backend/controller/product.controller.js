@@ -1,4 +1,4 @@
-const mongoose = require('mongoose'); 
+const mongoose = require('mongoose');
 const productService = require('../services/product.service');
 
 const controller = {
@@ -46,7 +46,14 @@ const controller = {
             const image = req.files?.image ? req.files.image[0].filename : null;
             const { productname, brand, price, stock } = req.body;
 
-            const details = { productname, brand, price, stock, image, productId };
+            const details = {
+                productname,
+                brand,
+                price,
+                stock,
+                image,
+                productId
+            };
 
             const data = await productService.updateProduct(cleanId, details);
             if (data.error) {
@@ -56,6 +63,24 @@ const controller = {
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: 'Error in update controller' });
+        }
+    },
+
+    deleteProduct: async (req, res) => {
+        try {
+            const { id } = req.params;
+            
+            const deletedId = await productService.deleteProduct(id);
+
+            if (deletedId.error) {
+                return res.status(deletedId.statuscode).json({ error: deletedId.error });
+            }
+
+            res.json({ deletedId });
+        }
+        catch (error) {
+            console.log(error, "Error in delete Product controller");
+            res.status(500).json({ error: 'Error in delete Product controller' });
         }
     }
 

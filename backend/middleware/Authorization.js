@@ -5,8 +5,8 @@ const genarateToken = async (user) => {
     try {
         console.log("Generating token for user:", user);
 
-        const { email, username, _id } = user;
-        const payload = { email, username, id: _id };
+        const { email, username, role, _id } = user;
+        const payload = { email, username, role, id: _id };
 
         if (!process.env.JWT_SECRATE_KEY) {
             throw new Error("SECRET_KEY is undefined. Check your .env file.");

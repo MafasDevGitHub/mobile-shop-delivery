@@ -1,14 +1,14 @@
 const User = require('../model/user.model');
 const authMiddleware = require('../middleware/Authorization');
 
-const signup = async (username, email, password) => {
+const signup = async (username, email, password, role) => {
     try {
         const emailIsTaken = await User.emailIsTaken(email);
         if (emailIsTaken) {
             return { error: "Email is already taken", statuscode: 500 }
         }
 
-        const newUser = new User({ username, email, password });
+        const newUser = new User({ username, email, password, role });
         const user = await newUser.save();
         return user;
 

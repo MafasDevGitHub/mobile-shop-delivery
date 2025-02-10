@@ -42,7 +42,19 @@ const updateProduct = async (id, details) => {
     }
 }
 
+const deleteProduct = async (id) => {
+    try{
+        const deleteData = await Product.findByIdAndDelete(id);
+        return deleteData._id
+    }
+    catch(error){
+        console.log(error);
+    return {error:"error in delete Product services",statuscode:500}
+    }
+}
+
 module.exports = {
     uploadProduct,
-    updateProduct
+    updateProduct,
+    deleteProduct
 }
