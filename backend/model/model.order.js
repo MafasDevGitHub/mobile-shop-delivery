@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema({
         price: Number,
         product: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'product'
+            ref: 'Product'
         }
     }],
     shippingAddress: {
@@ -39,5 +39,4 @@ const orderSchema = new mongoose.Schema({
     }
 },{timestamps: true})
 
-const Order = mongoose.model("Order", orderSchema);
-export default Order;
+module.exports = mongoose.model("Order", orderSchema);

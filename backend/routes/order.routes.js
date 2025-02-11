@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.post("/createorder",authMiddleware.verifyToken, createOrderController)
 
-export default router;
+module.exports = router
